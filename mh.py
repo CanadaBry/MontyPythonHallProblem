@@ -1,22 +1,22 @@
 from random import randint, random, seed
 
 def simulate() -> bool:
-    doors: list = [1,2,3] # Our 3 doors
+    doors: list = [1,2,3] # Represents the 3 doors
 
-    car: int = randint(1,3) # Pick one at random to have the car in it
+    car: int = randint(1,3) # Pick one door at random to have the car in it
     door: int = randint(1,3) # Player picks one door at random
 
-    doors.remove(door) # Remove the players door from available doors
+    doors.remove(door) # Remove the players door from the available doors
 
-    # Remove an available door
+    # Host removes an available door
     if car in doors: # Host cannot open door with car in it
-        doors = [car] # Remove door without the car
+        doors = [car] # So we remove the door without the car
     else: # Player's door is the car
-        doors.pop(randint(0,1)) # Remove either door
+        doors.pop(randint(0,1)) # Host can remove either door
     
-    switch: int = doors[0] # The door the player has the option to switch with
+    switch: int = doors[0] # Assign the door the player has the option to switch with
 
-    won: bool = switch == car # Does the player win if they switch?
+    won: bool = switch == car # Check if the player wins if they switch
 
     return won
 
@@ -26,10 +26,19 @@ def simulateSimplified() -> bool:
     door: int = randint(1,3)
 
     # Below is the simplified logic from the above function:
-    # 'if car in doors' can be changed to 'if car != door'
-    # body of can be 'switch = True' (implicitly you win if you switch to the car) -> can be simplified to 'return True'
-    # You cannot win by switching if you picked the car, so 'else' can be simplified to 'return False'.
-    # pattern is: 'if car != door: return True; else: return False;' -> this can be simplified to 'return car != door'
+    # 1) The statements 'doors.remove(door)' and 'if car in doors' can be simplified to 'if car != door'
+    # 2) Implicitly, you win if you switch to the car, so the body of the 'if' can simpified to 'won = True'. This can then be further simplified to 'return True'
+    # 3) Similarily, you cannot win by switching if you picked the door with the car, so the 'else' can be simplified to 'return False'
+    #
+    # The pattern is now: 
+    #
+    # if car != door: 
+    #   return True
+    # else: 
+    #   return False 
+    #
+    # This can be simplified to 'return car != door'
+
     return car != door 
 
 def simulateSimplifiedFurther() -> bool:
