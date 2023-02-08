@@ -42,19 +42,20 @@ def simulateSimplified() -> bool:
     return car != door 
 
 def simulateSimplifiedFurther() -> bool:
-    # chance of 'car != door' = 1 - chance of 'car == door'
-    # 'car == door' -> 'randint(1,3) == randint(1,3)'
-    # break into cases for first chosen randint(1,3): 'randint(1,3) == randint(1,3)' -> '1 == randint(1,3)', '2 == randint(1,3)', '3 == randint(1,3)'
-    # No matter what is chosen for first randint(1,3) the chance is 1/3 the statement is True
-    # using initial statement 'car != door' = 1 - 'car == door' -> 1 - 1/3 = 2/3
+    # Let's solve for the probability of 'car != door'
+    # 1) Inverting the probability: Chance of 'car != door' = 1 - Chance of 'car == door'
+    # 2) Replace the variables, with their values: 'car == door' -> 'randint(1,3) == randint(1,3)'
+    # 3) Break the problem into cases based on value chosen in first randint(1,3): 'randint(1,3) == randint(1,3)' -> '1 == randint(1,3)', '2 == randint(1,3)', '3 == randint(1,3)'
+    # 4) We can observe, no matter what is chosen for the first randint(1,3), the chance the statement is true is 1/3
+    # 5) We can now solve: 'car != door' = 1 - 'car == door' =  1 - 1/3 = 2/3
+
     return random() < 2/3
     
-
 def run(simulateFunc: callable, n: int, fixedSeeds: bool = False) -> float:
     wins: int = 0
     runs: int = 0
     while runs < n:
-        if fixedSeeds: seed(runs) # Used to show simulate and simualteSimplified are the same
+        if fixedSeeds: seed(runs) # When true, used to show simulate and simualteSimplified are functionally the same
         outcome: bool = simulateFunc()
         if outcome:
             wins +=1
